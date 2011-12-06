@@ -3,9 +3,17 @@
 
 1. Install {git}[http://git-scm.com/].
 
+   Set up SSH keys for github, as described {here}[http://help.github.com/set-up-git-redirect].
+
 2. Install {ruby & rails}[http://rubyonrails.org/download].
 
-3. bundler will manage the gems for the project
+   If it's not already there, insert the following at the end of your ~/.bashrc file:
+    export PATH=/var/lib/gems/1.8/bin:$PATH
+   This makes executables we install with <tt>gem</tt> available in our
+   shell.  The path should match the 'EXECUTABLE DIRECTORY' reported by
+   <tt>gem env</tt>.
+
+3. <tt>bundler</tt> will manage the gems for the project:
     sudo gem install bundler
 
 4. Checkout the project
@@ -14,12 +22,21 @@
 
 5. Install the gems that are specified in Gemfile
     bundle install
+   <tt>bundle</tt> may not be on your $PATH. Use <tt>gem env</tt> to find
+   it and add it. 
+
+   If bundle complains, it might be because you are missing header files.
+   These header files (for <tt>mkmf</tt>, <tt>sqlite3</tt>,
+   <tt>libxml</tt>etc.) are sometimes packaged separately from the main
+   software, in packages ending in <tt>dev</tt>.
 
 6. Create the database (specified in database yml) and seed it with data
     rake db:setup
 
 7. Start the server. GrinnellPlans will be at http://localhost:3000
     rails server
+   or, on rails version 2:
+    ./script/rails server
 
 
 === Helpful Tasks
@@ -36,9 +53,3 @@
 
 * To pretty up the display of data when you're using the console:
    Hirb.enable
-   
-* to run rspec tests
-  bundle exec rake spec
-
-* to run non-rspec tests
-  rake test
